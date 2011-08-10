@@ -2,29 +2,26 @@ package com.onb.shoppingcart.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_category")
 public class Category extends AbstractModel{
 	
 	@Column(unique = true)
-	private String categoryName;
+	private String name;
 
-	public String getCategoryName() {
-		return categoryName;
+	public String getName() {
+		return name;
 	}
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((categoryName == null) ? 0 : categoryName.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -37,10 +34,10 @@ public class Category extends AbstractModel{
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		if (categoryName == null) {
-			if (other.categoryName != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!categoryName.equals(other.categoryName))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
