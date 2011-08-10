@@ -1,25 +1,47 @@
 package com.onb.shoppingcart.domain;
 
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Category extends AbstractModel{
+@Table(name = "tbl_category")
+public class Category{
 
-	private String name;
+	@Id
+	@GeneratedValue
+	@Column(name = "key_category")
+	private BigDecimal categoryNumber;
+	
+	@Column(name = "fld_category_name", unique = true)
+	private String categoryName;
 
-	public String getName() {
-		return name;
+	public BigDecimal getCategoryNumber() {
+		return categoryNumber;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCategoryNumber(BigDecimal categoryNumber) {
+		this.categoryNumber = categoryNumber;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((categoryName == null) ? 0 : categoryName.hashCode());
 		return result;
 	}
 
@@ -32,10 +54,10 @@ public class Category extends AbstractModel{
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		if (name == null) {
-			if (other.name != null)
+		if (categoryName == null) {
+			if (other.categoryName != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!categoryName.equals(other.categoryName))
 			return false;
 		return true;
 	}
