@@ -1,0 +1,6 @@
+build
+.settings
+.classpath
+.project
+.springBeans
+WebContent/META-INF
