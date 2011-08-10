@@ -1,32 +1,15 @@
 package com.onb.shoppingcart.domain;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_category")
-public class Category{
-
-	@Id
-	@GeneratedValue
-	@Column(name = "key_category")
-	private BigDecimal categoryNumber;
+public class Category extends AbstractModel{
 	
-	@Column(name = "fld_category_name", unique = true)
+	@Column(unique = true)
 	private String categoryName;
-
-	public BigDecimal getCategoryNumber() {
-		return categoryNumber;
-	}
-
-	public void setCategoryNumber(BigDecimal categoryNumber) {
-		this.categoryNumber = categoryNumber;
-	}
 
 	public String getCategoryName() {
 		return categoryName;

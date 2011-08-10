@@ -1,5 +1,7 @@
 package com.onb.shoppingcart.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -9,13 +11,13 @@ public class AbstractModel {
 
 	@Id
 	@GeneratedValue
-	private Long id;
+	private BigDecimal id;
 
-	public Long getId() {
+	public BigDecimal getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(BigDecimal id) {
 		this.id = id;
 	}
 	

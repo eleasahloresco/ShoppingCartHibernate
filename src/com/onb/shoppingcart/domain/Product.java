@@ -4,40 +4,24 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_product")
-public class Product{
+public class Product extends AbstractModel{
 
-	@Id
-	@GeneratedValue
-	@Column(name = "key_product")
-	private BigDecimal productNumber;
-	
 	@ManyToOne
-	@Column(name = "key_category")
 	private Category category;
 	
-	@Column(name = "product_name", nullable = false, unique = true)
+	@Column(nullable = false, unique = true)
 	private String productName;
 	
-	@Column(name = "inventory_qty", nullable = false)
+	@Column(nullable = false)
 	private BigDecimal inventoryQuantity;
 	
-	@Column(name = "unit_price", nullable = false)
+	@Column(nullable = false)
 	private BigDecimal unitPrice;
-
-	public BigDecimal getProductNumber() {
-		return productNumber;
-	}
-
-	public void setProductNumber(BigDecimal productNumber) {
-		this.productNumber = productNumber;
-	}
 
 	public Category getCategory() {
 		return category;
