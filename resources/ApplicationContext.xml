@@ -32,6 +32,11 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.onb.shoppingcart.domain.Category</value>
+				<value>com.onb.shoppingcart.domain.Order</value>
+				<value>com.onb.shoppingcart.domain.OrderDetail</value>
+				<value>com.onb.shoppingcart.domain.Product</value>
+				<value>com.onb.shoppingcart.domain.Role</value>
+				<value>com.onb.shoppingcart.domain.User</value>				
 			</list>
 		</property>
 	</bean>

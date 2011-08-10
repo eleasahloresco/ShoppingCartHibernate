@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public class Role {
+public class Role extends AbstractModel{
 
 	@Column(unique = true, nullable = false)
 	private String name;

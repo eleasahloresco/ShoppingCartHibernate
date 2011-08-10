@@ -7,23 +7,23 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tbl_order")
 public class Order extends AbstractModel{
 
-	@ManyToMany
-	@JoinTable(name = "Order_User",
-			joinColumns = { @JoinColumn(name = "id")},
-			inverseJoinColumns = { @JoinColumn(name = "id")})
+	@ManyToOne
 	private User user;
 	
 	private BigDecimal amount = BigDecimal.ZERO;
 	
 	@OneToMany
 	@JoinTable(name = "Order_OrderDetails",
-			joinColumns = { @JoinColumn(name = "id")},
-			inverseJoinColumns = { @JoinColumn(name = "id")})
+			joinColumns = { @JoinColumn(name = "order_id")},
+			inverseJoinColumns = { @JoinColumn(name = "order_detail_id")})
 	private List<OrderDetail> orderDetails;
 
 	public User getUser() {

@@ -1,5 +1,7 @@
 package com.onb.shoppingcart.domain;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -12,18 +14,18 @@ public class User extends AbstractModel{
 	@JoinTable(name = "User_Role",
 			joinColumns = { @JoinColumn(name = "user_id")},
 			inverseJoinColumns = { @JoinColumn(name = "role_id")})
-	private Role role;
+	private List<Role> roles;
 	
 	private String username;
 	
 	private String password;
 
-	public Role getRole() {
-		return role;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	public String getUsername() {
@@ -41,6 +43,6 @@ public class User extends AbstractModel{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	
 }
