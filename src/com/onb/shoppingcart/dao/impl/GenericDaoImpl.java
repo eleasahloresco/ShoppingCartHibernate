@@ -7,15 +7,15 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.onb.shoppingcart.dao.DAO;
+import com.onb.shoppingcart.dao.GenericDao;
 
-public abstract class AbstractDao<T, ID extends Serializable> implements DAO<T, ID>{
+public abstract class GenericDaoImpl<T, ID extends Serializable> implements GenericDao<T, ID>{
 
 	private final Class<T> domainClass;
 	
 	private SessionFactory sessionFactory;
 	
-	protected AbstractDao(Class<T> domainClass){
+	protected GenericDaoImpl(Class<T> domainClass){
 		this.domainClass = domainClass;
 	}
 	

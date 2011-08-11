@@ -6,7 +6,7 @@ import com.onb.shoppingcart.dao.OrderDao;
 import com.onb.shoppingcart.domain.Order;
 
 @Repository("orderDao")
-public class OrderDaoImpl extends AbstractDao<Order, Long> implements OrderDao {
+public class OrderDaoImpl extends GenericDaoImpl<Order, Long> implements OrderDao {
 
 	protected OrderDaoImpl() {
 		super(Order.class);

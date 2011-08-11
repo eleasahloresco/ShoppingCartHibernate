@@ -2,7 +2,7 @@ package com.onb.shoppingcart.dao;
 
 import java.util.List;
 
-public interface DAO<T, ID> {
+public interface GenericDao<T, ID> {
 
 	public void save(T item);
 	
