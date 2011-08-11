@@ -3,6 +3,7 @@ package com.onb.shoppingcart.dao.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,26 +35,26 @@ public abstract class AbstractDao<T, ID extends Serializable> implements DAO<T, 
 
 	@Override
 	public void update(T item) {
-		// TODO Auto-generated method stub
-		
+		getSessionFactory().getCurrentSession().delete(item);		
 	}
 
 	@Override
 	public void delete(T item) {
-		// TODO Auto-generated method stub
+		getSessionFactory().getCurrentSession().delete(item);
 		
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T get(ID id) {
-		// TODO Auto-generated method stub
-		return null;
+		return (T) sessionFactory.getCurrentSession().get(domainClass, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(domainClass);
+		return criteria.list();
 	}
 
 }

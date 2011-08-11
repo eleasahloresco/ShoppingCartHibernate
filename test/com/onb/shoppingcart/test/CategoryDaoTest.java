@@ -1,19 +1,28 @@
 package com.onb.shoppingcart.test;
 
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.sql.DataSource;
 
-import junit.framework.Assert;
-
-import org.dbunit.DataSourceDatabaseTester;
-import org.dbunit.IDatabaseTester;
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.junit.After;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.onb.shoppingcart.dao.CategoryDao;
@@ -21,7 +30,7 @@ import com.onb.shoppingcart.domain.Category;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:ApplicationContext.xml"})
-public class CategoryDaoTest{
+public class CategoryDaoTest extends AbstractTransactionalJUnit4SpringContextTests{
 	
 	@Autowired
 	private DataSource dataSource;
@@ -29,41 +38,66 @@ public class CategoryDaoTest{
 	@Autowired
 	private CategoryDao categoryDao;
 	
-	protected IDatabaseTester dbTester;
-	
 	@Before
 	public void setUp() throws Exception{
-		dbTester = new DataSourceDatabaseTester(dataSource);
-		
-		IDataSet dataSet = new FlatXmlDataSet(getClass().getResource("dateset.xml"));
-		dbTester.setDataSet(dataSet);
-		dbTester.onSetup();
+		DatabaseOperation.CLEAN_INSERT.execute(getDatabaseConnection(), getDataSet());
 	}
 	
-	@After
-	public void tearDown() throws Exception{
-		dbTester.onTearDown();
+	private IDatabaseConnection getDatabaseConnection() throws DatabaseUnitException, SQLException{
+		IDatabaseConnection connection = new DatabaseConnection(getConnection());
+		return connection;
 	}
 	
-//	private IDatabaseConnection getConnection() throws Exception{
-//		Connection con = (Connection) dataSource.getConnection();
-//		DatabaseMetaData databaseMetaData = (DatabaseMetaData) con.getMetaData();
-//		IDatabaseConnection connection = new DatabaseConnection(con,
-//				databaseMetaData.getUserName().toUpperCase());
-//		return connection;
-//	}
-//	
-//	private IDataSet getDataSet() throws Exception{
-//		File file = new File("resources/dataset.xml");
-//		return new FlatXmlDataSet(file);
-//	}
+	private Connection getConnection() throws SQLException{
+		return dataSource.getConnection();
+	}
+	
+	private IDataSet getDataSet() throws MalformedURLException, DataSetException{
+		return new FlatXmlDataSetBuilder().build(new File("resources/dataset.xml"));
+	}
 	
 	@Test
 	public void testAdd(){
 		Category category = new Category();
-		category.setName("Food");
+		category.setName("Shoes");
 		categoryDao.save(category);
 		
-		Assert.assertNotNull(category.getId());
+		assertNotNull(category.getId());
 	}
+	
+	@Test
+	public void testDelete(){
+		Category category = categoryDao.get(1L);
+		categoryDao.delete(category);
+		
+		assertNull(categoryDao.get(1L));
+	}
+	
+	@Test
+	public void testUpdate(){
+		Category category = categoryDao.get(1L);
+		String prevName = category.getName();
+		category.setName("Candies");
+		
+		assertNotSame(prevName, category.getName());
+	}
+	
+	
+	@Test
+	public void testGet(){
+		Category category = categoryDao.get(1l);
+		assertNotNull(category.getId());
+	}
+	
+	@Test
+	public void testGetAll(){
+		Category category = new Category();
+		category.setName("Books");
+		categoryDao.save(category);
+		
+		List<Category> categories = categoryDao.getAll();
+		assertTrue(categories.contains(category));
+		
+	}
+	
 }
