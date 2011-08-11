@@ -15,4 +15,7 @@
 	
 	<OrderTable id="1" user_id="2" amount="1000.45" />
 	<OrderTable id="2" user_id="2" amount="500" />
+	
+	<OrderDetail id="1" product_id="1" order_id="1" quantity="10" unitPrice="50.50" />
+	<OrderDetail id="2" product_id="2" order_id="1" quantity="10" unitPrice="20.25" />
 </dataset>
