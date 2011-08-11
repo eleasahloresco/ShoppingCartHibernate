@@ -52,14 +52,10 @@ public class OrderDetailDaoTest extends AbstractTransactionalJUnit4SpringContext
 	}
 	
 	private IDatabaseConnection getDatabaseConnection() throws DatabaseUnitException, SQLException{
-		IDatabaseConnection connection = new DatabaseConnection(getConnection());
+		IDatabaseConnection connection = new DatabaseConnection(dataSource.getConnection());
 		return connection;
 	}
-	
-	private Connection getConnection() throws SQLException{
-		return dataSource.getConnection();
-	}
-	
+		
 	private IDataSet getDataSet() throws MalformedURLException, DataSetException{
 		return new FlatXmlDataSetBuilder().build(new File("resources/dataset.xml"));
 	}
