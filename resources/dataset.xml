@@ -6,4 +6,13 @@
 	
 	<Product id="1" category_id="1" name="Chocolate" inventoryQuantity="100" unitPrice="50.50" />
 	<Product id="2" category_id="1" name="Donut" inventoryQuantity="100" unitPrice="20.25" />
+	
+	<Role id="1" name="Administrator" />
+	<Role id="2" name="Customer" />
+	
+	<User id="1" username="admin" password="admin" />
+	<User id="2" username="cus1" password="cus1" />
+	
+	<OrderTable id="1" user_id="2" amount="1000.45" />
+	<OrderTable id="2" user_id="2" amount="500" />
 </dataset>
