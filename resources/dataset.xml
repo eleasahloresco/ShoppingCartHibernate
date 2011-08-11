@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<Category id="1" name="Food" />
+	<Category id="2" name="Clothing" />
+	<Category id="3" name="Accessories" />
+</dataset>

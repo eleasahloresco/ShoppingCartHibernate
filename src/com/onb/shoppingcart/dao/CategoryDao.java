@@ -1,5 +1,7 @@
 package com.onb.shoppingcart.dao;
 
-public interface CategoryDao {
+import com.onb.shoppingcart.domain.Category;
+
+public interface CategoryDao extends DAO<Category, Long>{
 
 }

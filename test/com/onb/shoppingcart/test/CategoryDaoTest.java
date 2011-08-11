@@ -1,49 +1,69 @@
 package com.onb.shoppingcart.test;
 
-
-import java.io.FileInputStream;
-
 import javax.sql.DataSource;
 
-import org.dbunit.DatabaseTestCase;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.XmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import junit.framework.Assert;
 
+import org.dbunit.DataSourceDatabaseTester;
+import org.dbunit.IDatabaseTester;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.onb.shoppingcart.dao.CategoryDao;
 import com.onb.shoppingcart.domain.Category;
 
-
-public class CategoryDaoTest extends DatabaseTestCase{
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:ApplicationContext.xml"})
+public class CategoryDaoTest{
 	
 	@Autowired
 	private DataSource dataSource;
 	
-	protected IDatabaseConnection getConnection() throws Exception {
-		return new DatabaseConnection(dataSource.getConnection());
-	}
-
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-		return new XmlDataSet(new FileInputStream("resources/dataset.xml"));
+	@Autowired
+	private CategoryDao categoryDao;
+	
+	protected IDatabaseTester dbTester;
+	
+	@Before
+	public void setUp() throws Exception{
+		dbTester = new DataSourceDatabaseTester(dataSource);
+		
+		IDataSet dataSet = new FlatXmlDataSet(getClass().getResource("dateset.xml"));
+		dbTester.setDataSet(dataSet);
+		dbTester.onSetup();
 	}
 	
-	protected DatabaseOperation getSetUpOperation() throws Exception{
-		return DatabaseOperation.CLEAN_INSERT;
+	@After
+	public void tearDown() throws Exception{
+		dbTester.onTearDown();
 	}
 	
-	protected DatabaseOperation getTearDownOperation() throws Exception{
-		return DatabaseOperation.NONE;
-	}
+//	private IDatabaseConnection getConnection() throws Exception{
+//		Connection con = (Connection) dataSource.getConnection();
+//		DatabaseMetaData databaseMetaData = (DatabaseMetaData) con.getMetaData();
+//		IDatabaseConnection connection = new DatabaseConnection(con,
+//				databaseMetaData.getUserName().toUpperCase());
+//		return connection;
+//	}
+//	
+//	private IDataSet getDataSet() throws Exception{
+//		File file = new File("resources/dataset.xml");
+//		return new FlatXmlDataSet(file);
+//	}
 	
 	@Test
-	public void addCategoryTest(){
+	public void testAdd(){
 		Category category = new Category();
 		category.setName("Food");
+		categoryDao.save(category);
 		
-		assertNotNull(category.getId());
+		Assert.assertNotNull(category.getId());
 	}
 }

@@ -1,7 +1,15 @@
 package com.onb.shoppingcart.dao.impl;
 
-import com.onb.shoppingcart.dao.CategoryDao;
+import org.springframework.stereotype.Repository;
 
-public class CategoryDaoImpl implements CategoryDao {
+import com.onb.shoppingcart.dao.CategoryDao;
+import com.onb.shoppingcart.domain.Category;
+
+@Repository("categoryDao")
+public class CategoryDaoImpl extends AbstractDao<Category, Long> implements CategoryDao {
+	
+	public CategoryDaoImpl(){
+		super(Category.class);
+	}
 
 }
