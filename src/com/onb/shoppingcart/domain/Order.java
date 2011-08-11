@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_order")
+@Table(name = "OrderTable")
 public class Order extends AbstractModel{
 
 	@ManyToOne
