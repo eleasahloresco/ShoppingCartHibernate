@@ -75,10 +75,10 @@ public class CategoryDaoTest extends AbstractTransactionalJUnit4SpringContextTes
 	@Test
 	public void testUpdate(){
 		Category category = categoryDao.get(1L);
-		String prevName = category.getName();
 		category.setName("Candies");
+		categoryDao.update(category);
 		
-		assertNotSame(prevName, category.getName());
+		assertEquals("Candies", category.getName());
 	}
 	
 	

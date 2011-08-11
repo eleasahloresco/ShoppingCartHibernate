@@ -3,4 +3,7 @@
 	<Category id="1" name="Food" />
 	<Category id="2" name="Clothing" />
 	<Category id="3" name="Accessories" />
+	
+	<Product id="1" category_id="1" name="Chocolate" inventoryQuantity="100" unitPrice="50.50" />
+	<Product id="2" category_id="1" name="Donut" inventoryQuantity="100" unitPrice="20.25" />
 </dataset>
