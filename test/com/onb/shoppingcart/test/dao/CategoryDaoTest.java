@@ -1,10 +1,12 @@
 package com.onb.shoppingcart.test.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,11 +21,9 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.onb.shoppingcart.dao.CategoryDao;
 import com.onb.shoppingcart.domain.Category;
