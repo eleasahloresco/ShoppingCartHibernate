@@ -37,6 +37,7 @@ public class CategoryDaoTest extends AbstractTransactionalJUnit4SpringContextTes
 	@Autowired
 	private CategoryDao categoryDao;
 	
+	
 	@Before
 	public void setUp() throws Exception{
 		DatabaseOperation.CLEAN_INSERT.execute(getDatabaseConnection(), getDataSet());
