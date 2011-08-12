@@ -1,4 +1,4 @@
-package com.onb.shoppingcart.test.dao;
+package com.onb.shoppingcart.dao.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -28,72 +28,85 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import com.onb.shoppingcart.dao.CategoryDao;
 import com.onb.shoppingcart.domain.Category;
 
-@ContextConfiguration(locations={"classpath:ApplicationContext.xml"})
-public class CategoryDaoTest extends AbstractTransactionalJUnit4SpringContextTests{
-	
+@ContextConfiguration(locations = { "classpath:ApplicationContext.xml" })
+public class CategoryDaoTest extends
+		AbstractTransactionalJUnit4SpringContextTests {
+
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Autowired
 	private CategoryDao categoryDao;
-	
-	
+
 	@Before
-	public void setUp() throws Exception{
-		DatabaseOperation.CLEAN_INSERT.execute(getDatabaseConnection(), getDataSet());
+	public void setUp() throws Exception {
+		DatabaseOperation.CLEAN_INSERT.execute(getDatabaseConnection(),
+				getDataSet());
 	}
-	
-	private IDatabaseConnection getDatabaseConnection() throws DatabaseUnitException, SQLException{
-		IDatabaseConnection connection = new DatabaseConnection(dataSource.getConnection());
+
+	private IDatabaseConnection getDatabaseConnection()
+			throws DatabaseUnitException, SQLException {
+		IDatabaseConnection connection = new DatabaseConnection(
+				dataSource.getConnection());
 		return connection;
 	}
 
-	private IDataSet getDataSet() throws MalformedURLException, DataSetException{
-		return new FlatXmlDataSetBuilder().build(new File("resources/dataset.xml"));
+	private IDataSet getDataSet() throws MalformedURLException,
+			DataSetException {
+		return new FlatXmlDataSetBuilder().build(new File(
+				"resources/dataset.xml"));
 	}
-	
+
 	@Test
-	public void testAdd(){
+	public void testAdd() {
 		Category category = new Category();
 		category.setName("Shoes");
 		categoryDao.save(category);
-		
+
 		assertNotNull(category.getId());
 	}
-	
+
 	@Test
-	public void testDelete(){
+	public void testDelete() {
 		Category category = categoryDao.get(1L);
 		categoryDao.delete(category);
-		
+
 		assertNull(categoryDao.get(1L));
 	}
-	
+
 	@Test
-	public void testUpdate(){
+	public void testUpdate() {
 		Category category = categoryDao.get(1L);
 		category.setName("Candies");
 		categoryDao.update(category);
-		
+
 		assertEquals("Candies", category.getName());
 	}
-	
-	
+
 	@Test
-	public void testGet(){
+	public void testGet() {
 		Category category = categoryDao.get(1l);
 		assertNotNull(category.getId());
 	}
-	
+
 	@Test
-	public void testGetAll(){
+	public void testGetAll() {
+		Category category = new Category();
+		category.setName("Books");
+		categoryDao.save(category);
+
+		List<Category> categories = categoryDao.getAll();
+		assertTrue(categories.contains(category));
+	}
+
+	@Test
+	public void testGetByName(){
 		Category category = new Category();
 		category.setName("Books");
 		categoryDao.save(category);
 		
-		List<Category> categories = categoryDao.getAll();
-		assertTrue(categories.contains(category));
-		
+		String sqlQuery = "from Category category where category.name = '" + category.getName() + "'";
+		List<Category> categories = categoryDao.getByCriteria(sqlQuery);
+		assertEquals("Books", categories.get(0).getName());
 	}
-	
 }

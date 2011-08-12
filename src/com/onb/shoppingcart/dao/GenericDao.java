@@ -13,5 +13,7 @@ public interface GenericDao<T, ID> {
 	public T get(ID id);
 	
 	public List<T> getAll();
+
+	public abstract List<T> getByCriteria(String sqlQuery);
 	
 }

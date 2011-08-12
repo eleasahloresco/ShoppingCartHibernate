@@ -1,4 +1,4 @@
-package com.onb.shoppingcart.test.dao;
+package com.onb.shoppingcart.dao.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

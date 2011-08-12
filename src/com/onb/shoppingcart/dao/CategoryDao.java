@@ -4,4 +4,6 @@ import com.onb.shoppingcart.domain.Category;
 
 public interface CategoryDao extends GenericDao<Category, Long>{
 
+
+	
 }

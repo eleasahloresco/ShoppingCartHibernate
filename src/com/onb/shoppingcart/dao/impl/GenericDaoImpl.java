@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.onb.shoppingcart.dao.GenericDao;
@@ -57,4 +60,10 @@ public abstract class GenericDaoImpl<T, ID extends Serializable> implements Gene
 		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> getByCriteria(String sqlQuery){
+		Query query = getSessionFactory().getCurrentSession().createQuery(sqlQuery);
+		return query.list();
+	}
 }

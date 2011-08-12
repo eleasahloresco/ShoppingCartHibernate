@@ -1,8 +1,7 @@
-package com.onb.shoppingcart.test.dao;
+package com.onb.shoppingcart.dao.test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -26,23 +25,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-import com.onb.shoppingcart.dao.CategoryDao;
+import com.onb.shoppingcart.dao.OrderDao;
+import com.onb.shoppingcart.dao.OrderDetailDao;
 import com.onb.shoppingcart.dao.ProductDao;
-import com.onb.shoppingcart.domain.Category;
+import com.onb.shoppingcart.domain.Order;
+import com.onb.shoppingcart.domain.OrderDetail;
 import com.onb.shoppingcart.domain.Product;
 
 @ContextConfiguration(locations={"classpath:ApplicationContext.xml"})
-public class ProductDaoTest extends AbstractTransactionalJUnit4SpringContextTests{
-	
+public class OrderDetailDaoTest extends AbstractTransactionalJUnit4SpringContextTests{
+
 	@Autowired
 	private DataSource dataSource;
+	
+	@Autowired
+	private OrderDao orderDao;
 	
 	@Autowired
 	private ProductDao productDao;
 	
 	@Autowired
-	private CategoryDao categoryDao;
-
+	private OrderDetailDao orderDetailDao;
+	
 	@Before
 	public void setUp() throws Exception{
 		DatabaseOperation.CLEAN_INSERT.execute(getDatabaseConnection(), getDataSet());
@@ -52,59 +56,61 @@ public class ProductDaoTest extends AbstractTransactionalJUnit4SpringContextTest
 		IDatabaseConnection connection = new DatabaseConnection(dataSource.getConnection());
 		return connection;
 	}
-	
+		
 	private IDataSet getDataSet() throws MalformedURLException, DataSetException{
 		return new FlatXmlDataSetBuilder().build(new File("resources/dataset.xml"));
 	}
-
 	
 	@Test
-	public void testAdd(){
-		Category category = categoryDao.get(1L);
-		Product product = new Product();
-		product.setCategory(category);
-		product.setName("Ice Cream");
-		product.setInventoryQuantity(new BigDecimal("1000"));
-		product.setUnitPrice(new BigDecimal("10.50"));
-		productDao.save(product);
+	public void testSave(){
+		Order order = orderDao.get(1L);
+		Product product = productDao.get(1L);
+		OrderDetail orderDetail = new OrderDetail();
+		orderDetail.setOrder(order);
+		orderDetail.setProduct(product);
+		orderDetail.setQuantity(new BigDecimal("10"));
+		orderDetail.setUnitPrice(new BigDecimal("1000"));
+		orderDetailDao.save(orderDetail);
 		
-		assertNotNull(product.getId());
+		assertNotNull(orderDetail.getId());
 	}
 	
 	@Test
 	public void testDelete(){
-		Product product = productDao.get(1L);
-		productDao.delete(product);
+		OrderDetail orderDetail = orderDetailDao.get(1L);
+		orderDetailDao.delete(orderDetail);
 		
-		assertNull(productDao.get(1L));
+		assertFalse(orderDetailDao.getAll().contains(orderDetail));	
 	}
 	
 	@Test
 	public void testUpdate(){
-		Product product = productDao.get(1L);
-		product.setName("Chicken");
-		productDao.update(product);
+		OrderDetail orderDetail = orderDetailDao.get(1L);
+		BigDecimal prevOrderDetailQuantity = orderDetail.getQuantity();
+		orderDetail.setQuantity(new BigDecimal("20"));
+		orderDetailDao.update(orderDetail);
 		
-		assertEquals("Chicken", product.getName());
+		assertFalse(prevOrderDetailQuantity.equals(orderDetail.getQuantity()));
 	}
 	
 	@Test
 	public void testGet(){
-		Product product = productDao.get(1L);
-		assertNotNull(product.getId());
+		OrderDetail orderDetail = orderDetailDao.get(1L);
+		assertNotNull(orderDetail.getId());
 	}
-	
+
 	@Test
 	public void testGetAll(){
-		Category category = categoryDao.get(1L);
-		Product product = new Product();
-		product.setCategory(category);
-		product.setName("Ice Cream");
-		product.setInventoryQuantity(new BigDecimal("1000"));
-		product.setUnitPrice(new BigDecimal("10.50"));
-		productDao.save(product);
+		Order order = orderDao.get(1L);
+		Product product = productDao.get(1L);
+		OrderDetail orderDetail = new OrderDetail();
+		orderDetail.setOrder(order);
+		orderDetail.setProduct(product);
+		orderDetail.setQuantity(new BigDecimal("10"));
+		orderDetail.setUnitPrice(new BigDecimal("1000"));
+		orderDetailDao.save(orderDetail);
 		
-		List<Product> products = productDao.getAll();
-		assertTrue(products.contains(product));
+		List<OrderDetail> orderDetails = orderDetailDao.getAll();
+		assertTrue(orderDetails.contains(orderDetail));
 	}
 }
