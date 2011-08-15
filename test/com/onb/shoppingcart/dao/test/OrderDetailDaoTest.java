@@ -68,7 +68,7 @@ public class OrderDetailDaoTest extends AbstractTransactionalJUnit4SpringContext
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setOrder(order);
 		orderDetail.setProduct(product);
-		orderDetail.setQuantity(new BigDecimal("10"));
+		orderDetail.setQuantity(10);
 		orderDetail.setUnitPrice(new BigDecimal("1000"));
 		orderDetailDao.save(orderDetail);
 		
@@ -86,8 +86,8 @@ public class OrderDetailDaoTest extends AbstractTransactionalJUnit4SpringContext
 	@Test
 	public void testUpdate(){
 		OrderDetail orderDetail = orderDetailDao.get(1L);
-		BigDecimal prevOrderDetailQuantity = orderDetail.getQuantity();
-		orderDetail.setQuantity(new BigDecimal("20"));
+		Integer prevOrderDetailQuantity = orderDetail.getQuantity();
+		orderDetail.setQuantity(20);
 		orderDetailDao.update(orderDetail);
 		
 		assertFalse(prevOrderDetailQuantity.equals(orderDetail.getQuantity()));
@@ -106,7 +106,7 @@ public class OrderDetailDaoTest extends AbstractTransactionalJUnit4SpringContext
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setOrder(order);
 		orderDetail.setProduct(product);
-		orderDetail.setQuantity(new BigDecimal("10"));
+		orderDetail.setQuantity(10);
 		orderDetail.setUnitPrice(new BigDecimal("1000"));
 		orderDetailDao.save(orderDetail);
 		

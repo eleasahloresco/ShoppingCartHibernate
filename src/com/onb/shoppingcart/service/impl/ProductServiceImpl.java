@@ -12,7 +12,7 @@ import com.onb.shoppingcart.service.ProductService;
 import com.onb.shoppingcart.service.exception.AdminServiceException;
 
 @Service("productService")
-@Transactional
+@Transactional(readOnly = true)
 public class ProductServiceImpl implements ProductService {
 
 	private ProductDao productDao;
@@ -28,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	@Transactional(readOnly = false)
 	public void saveProduct(Product product) throws AdminServiceException{
 		if(product == null){
 			throw new AdminServiceException("Product is Empty");
@@ -42,11 +43,29 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getByCategory(Long categoryNumber) {
+	public List<Product> getProductByCategory(Long categoryNumber) {
+		//queries should be in dao
 		String sqlQuery = "from Product product where product.category.id = '" + categoryNumber + "'";
 		return productDao.getByCriteria(sqlQuery);
 	}
 
+	@Override
+	public Product getProduct(Long id) {
+		return productDao.get(id);
+	}
+
+	@Override
+	public Product getProductByName(String name) {
+		String sqlQuery = "from Product product where product.name = '" + name + "'";
+		return productDao.getByCriteria(sqlQuery).get(0);
+	}
+	
+	@Override
+	public List<Product> getAllProductsWithQuantityGreaterThanZero(Long categoryNumber) {
+		String sqlQuery = "from Product product where product.category.id = '" + categoryNumber + "' " +
+				"and product.inventoryQuantity > 0";
+		return productDao.getByCriteria(sqlQuery);
+	}
 	
 		
 }

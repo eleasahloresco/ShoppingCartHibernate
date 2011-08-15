@@ -11,6 +11,12 @@ public interface ProductService {
 
 	void saveProduct(Product product) throws AdminServiceException;
 
-	List<Product> getByCategory(Long categoryNumber);
+	public abstract List<Product> getProductByCategory(Long categoryNumber);
+
+	public abstract Product getProduct(Long id);
+
+	public abstract Product getProductByName(String name);
+
+	public abstract List<Product> getAllProductsWithQuantityGreaterThanZero(Long categoryNumber);
 
 }

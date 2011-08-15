@@ -20,7 +20,7 @@ public class OrderDetail extends AbstractModel{
 	private BigDecimal unitPrice;
 	
 	@Column(nullable = false)
-	private BigDecimal quantity;
+	private Integer quantity;
 
 	public Order getOrder() {
 		return order;
@@ -46,16 +46,16 @@ public class OrderDetail extends AbstractModel{
 		this.unitPrice = unitPrice;
 	}
 
-	public BigDecimal getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(BigDecimal quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 	
-	public void increaseQuantity(BigDecimal newQuantity) {
-		this.quantity = this.quantity.add((newQuantity));
+	public void increaseQuantity(Integer newQuantity) {
+		this.quantity += newQuantity;
 	}
 	
 

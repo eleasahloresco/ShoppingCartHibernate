@@ -38,7 +38,7 @@ public abstract class GenericDaoImpl<T, ID extends Serializable> implements Gene
 
 	@Override
 	public void update(T item) {
-		getSessionFactory().getCurrentSession().delete(item);		
+		getSessionFactory().getCurrentSession().update(item);		
 	}
 
 	@Override

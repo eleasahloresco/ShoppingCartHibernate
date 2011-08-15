@@ -24,20 +24,6 @@ import com.onb.shoppingcart.service.impl.AdminServiceImpl;
 @RunWith(MockitoJUnitRunner.class)
 public class AdminServiceTest {
 	
-	private AdminServiceImpl adminService = new AdminServiceImpl();
-	
-	@Mock
-	private CategoryDao categoryDao;
-	
-	@Mock
-	private ProductDao productDao;
-	
-	@Before 
-	public void setUp(){
-		adminService.setCategoryDao(categoryDao);
-		adminService.setProductDao(productDao);
-	}
-	
 
 	
 }

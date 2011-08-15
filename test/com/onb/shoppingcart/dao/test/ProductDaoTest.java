@@ -64,7 +64,7 @@ public class ProductDaoTest extends AbstractTransactionalJUnit4SpringContextTest
 		Product product = new Product();
 		product.setCategory(category);
 		product.setName("Ice Cream");
-		product.setInventoryQuantity(new BigDecimal("1000"));
+		product.setInventoryQuantity(1000);
 		product.setUnitPrice(new BigDecimal("10.50"));
 		productDao.save(product);
 		
@@ -100,7 +100,7 @@ public class ProductDaoTest extends AbstractTransactionalJUnit4SpringContextTest
 		Product product = new Product();
 		product.setCategory(category);
 		product.setName("Ice Cream");
-		product.setInventoryQuantity(new BigDecimal("1000"));
+		product.setInventoryQuantity(1000);
 		product.setUnitPrice(new BigDecimal("10.50"));
 		productDao.save(product);
 		
@@ -114,7 +114,7 @@ public class ProductDaoTest extends AbstractTransactionalJUnit4SpringContextTest
 		Product product = new Product();
 		product.setCategory(category);
 		product.setName("Ice Cream");
-		product.setInventoryQuantity(new BigDecimal("1000"));
+		product.setInventoryQuantity(1000);
 		product.setUnitPrice(new BigDecimal("10.50"));
 		productDao.save(product);
 		

@@ -16,7 +16,7 @@ public class Product extends AbstractModel{
 	private String name;
 	
 	@Column(nullable = false)
-	private BigDecimal inventoryQuantity;
+	private Integer inventoryQuantity;
 	
 	@Column(nullable = false)
 	private BigDecimal unitPrice;
@@ -37,11 +37,11 @@ public class Product extends AbstractModel{
 		this.name = name;
 	}
 
-	public BigDecimal getInventoryQuantity() {
+	public Integer getInventoryQuantity() {
 		return inventoryQuantity;
 	}
 
-	public void setInventoryQuantity(BigDecimal inventoryQuantity) {
+	public void setInventoryQuantity(Integer inventoryQuantity) {
 		this.inventoryQuantity = inventoryQuantity;
 	}
 

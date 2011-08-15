@@ -56,6 +56,7 @@ public class Order extends AbstractModel{
 		}
 		else{
 			orderDetails.add(orderDetail);
+			//find order with the same product then increment
 			reArrangeArrayListToAvoidDuplication();
 		}
 		amount = amount.add(orderDetail.getUnitPrice());
@@ -85,6 +86,15 @@ public class Order extends AbstractModel{
 	public void removeAllOrderDetails() {
 		getOrderDetails().removeAll(orderDetails);
 		amount = BigDecimal.ZERO;
+	}
+	
+	public BigDecimal computeToTalAmount(){
+		BigDecimal totalAmount = BigDecimal.ZERO;
+		for (OrderDetail orderDetail : getOrderDetails()) {
+			BigDecimal orderDetailAmount = orderDetail.getUnitPrice().multiply(new BigDecimal(orderDetail.getQuantity()));
+			totalAmount = totalAmount.add(orderDetailAmount);
+		}
+		return totalAmount;
 	}
 	
 	@Override

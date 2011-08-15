@@ -75,7 +75,7 @@ public class OrderTest {
 	private OrderDetail createOrderDetail(){
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setProduct(createProduct());
-		orderDetail.setQuantity(new BigDecimal("10"));
+		orderDetail.setQuantity(10);
 		orderDetail.setUnitPrice(new BigDecimal("100.50"));
 		
 		return orderDetail;
@@ -84,7 +84,7 @@ public class OrderTest {
 	private OrderDetail createOrderDetail2(){
 		OrderDetail orderDetail = new OrderDetail();
 		orderDetail.setProduct(createProduct2());
-		orderDetail.setQuantity(new BigDecimal("10"));
+		orderDetail.setQuantity(10);
 		orderDetail.setUnitPrice(new BigDecimal("100.50"));
 		
 		return orderDetail;
@@ -95,7 +95,7 @@ public class OrderTest {
 		product.setId(new Long("1"));
 		product.setCategory(createCategory());
 		product.setName("Pizza");
-		product.setInventoryQuantity(new BigDecimal("1000"));
+		product.setInventoryQuantity(10);
 		product.setUnitPrice(new BigDecimal("100.50"));
 		
 		return product;
@@ -107,7 +107,7 @@ public class OrderTest {
 		product.setId(new Long("2"));
 		product.setCategory(createCategory());
 		product.setName("Donut");
-		product.setInventoryQuantity(new BigDecimal("1000"));
+		product.setInventoryQuantity(1000);
 		product.setUnitPrice(new BigDecimal("100.50"));
 		
 		return product;

@@ -13,7 +13,7 @@
                 <intercept-url pattern="/customer/**" access="hasRole('Customer')"/>
                 
               
-                <form-login />
+                <form-login/>
                 <logout />
                 <remember-me />
         </http>

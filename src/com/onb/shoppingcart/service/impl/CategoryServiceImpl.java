@@ -28,6 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
 			throw new AdminServiceException("Category is Empty");
 		}
 		List<Category> categories = categoryDao.getAll();
+		//query instead of retrieving all categories
 		
 		if(categories.contains(category)){
 			throw new AdminServiceException("Category already Exist!");
