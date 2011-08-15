@@ -107,4 +107,20 @@ public class ProductDaoTest extends AbstractTransactionalJUnit4SpringContextTest
 		List<Product> products = productDao.getAll();
 		assertTrue(products.contains(product));
 	}
+	
+	@Test
+	public void testGetAllProductsWithSpecificCategory(){
+		Category category = categoryDao.get(1L);
+		Product product = new Product();
+		product.setCategory(category);
+		product.setName("Ice Cream");
+		product.setInventoryQuantity(new BigDecimal("1000"));
+		product.setUnitPrice(new BigDecimal("10.50"));
+		productDao.save(product);
+		
+		String sqlQuery = "from Product product where product.category.id = '" + category.getId() + "'";
+		List<Product> products = productDao.getByCriteria(sqlQuery);
+		assertTrue(products.contains(product));
+		
+	}
 }

@@ -32,48 +32,6 @@ public class AdminServiceImpl implements AdminService {
 		this.productDao = productDao;
 	}
 
-
-	@Override
-	public List<Category> getAllCategories() {
-		return categoryDao.getAll();
-	}
-
-	@Override
-	public void saveCategory(Category category) throws AdminServiceException {
-		if(category == null){
-			throw new AdminServiceException("Category is Empty");
-		}
-		List<Category> categories = categoryDao.getAll();
-		
-		if(categories.contains(category)){
-			throw new AdminServiceException("Category already Exist!");
-		}
-		
-		categoryDao.save(category);
-	}
 	
-	@Override
-	public List<Product> getAllProducts(){
-		return productDao.getAll();
-	}
-	
-	@Override
-	public void saveProduct(Product product) throws AdminServiceException{
-		if(product == null){
-			throw new AdminServiceException("Product is Empty");
-		}
-		List<Product> products = productDao.getAll();
-		
-		if(products.contains(product)){
-			throw new AdminServiceException("Product already Exist!");
-		}
-		
-		productDao.save(product);
-	}
-
-	@Override
-	public Category getCategory(Long id) {
-		return categoryDao.get(id);
-	}
 		
 }

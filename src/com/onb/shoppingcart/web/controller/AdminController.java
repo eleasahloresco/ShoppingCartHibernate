@@ -1,6 +1,5 @@
 package com.onb.shoppingcart.web.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,18 +14,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.onb.shoppingcart.domain.Category;
 import com.onb.shoppingcart.domain.Product;
 import com.onb.shoppingcart.service.AdminService;
+import com.onb.shoppingcart.service.CategoryService;
+import com.onb.shoppingcart.service.ProductService;
 import com.onb.shoppingcart.service.exception.AdminServiceException;
 
 @Controller
 public class AdminController {
+	
+	private CategoryService categoryService;
 
-	private AdminService adminService;
+	private ProductService productService;
+	
+	@Autowired	
+	public void setCategoryService(CategoryService categoryService) {
+		this.categoryService = categoryService;
+	}
 
 	@Autowired
-	public void setAdminService(AdminService adminService) {
-		this.adminService = adminService;
+	public void setProductService(ProductService productService) {
+		this.productService = productService;
 	}
-	
+
+
+
 	@RequestMapping(value = "/admin/admin")
 	public String showAdminForm() {
 		return "admin/admin";
@@ -34,7 +44,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/admin/addCategory", method = RequestMethod.GET)
 	public String showAddCategoryForm(@ModelAttribute("categoryModel") Category category, HttpServletRequest request){
-		List<Category> categories = adminService.getAllCategories();
+		List<Category> categories = categoryService.getAllCategories();
 		request.setAttribute("categories", categories);
 		
 		return "admin/addCategory";
@@ -44,7 +54,7 @@ public class AdminController {
 	public String addCategory(@ModelAttribute("categoryModel") Category category, BindingResult bindingResult,
 			HttpServletRequest request){
 		
-		List<Category> categories = adminService.getAllCategories();
+		List<Category> categories = categoryService.getAllCategories();
 		request.setAttribute("categories", categories);
 		
 		if (category.getName() == null || category.getName().isEmpty()){
@@ -56,7 +66,7 @@ public class AdminController {
 		}
 		
 		try {
-			adminService.saveCategory(category);
+			categoryService.saveCategory(category);
 		} catch (AdminServiceException e) {
 			bindingResult.rejectValue("name", "name.validation.error", "already exist");
 			return "admin/addCategory";
@@ -67,10 +77,10 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/addProduct", method = RequestMethod.GET)
 	public String showAddProductForm(@ModelAttribute("productModel") Product product, HttpServletRequest request){
-		List<Product> products = adminService.getAllProducts();
+		List<Product> products = productService.getAllProducts();
 		request.setAttribute("products", products);
 		
-		List<Category> categories = adminService.getAllCategories();
+		List<Category> categories = categoryService.getAllCategories();
 		request.setAttribute("categories", categories);
 		
 		return "admin/addProduct";
@@ -80,10 +90,10 @@ public class AdminController {
 	public String addProduct(@ModelAttribute("productModel") Product product, BindingResult bindingResult,
 			HttpServletRequest request){
 		
-		List<Product> products = adminService.getAllProducts();
+		List<Product> products = productService.getAllProducts();
 		request.setAttribute("products", products);
 		
-		List<Category> categories = adminService.getAllCategories();
+		List<Category> categories = categoryService.getAllCategories();
 		request.setAttribute("categories", categories);
 		
 		if (product.getName() == null || product.getName().isEmpty()){
@@ -111,11 +121,11 @@ public class AdminController {
 		}
 		
 		Long selected= new Long(request.getParameter("category.id"));
-		Category category = adminService.getCategory(selected);
+		Category category = categoryService.getCategory(selected);
 		product.setCategory(category);
 		
 		try {
-			adminService.saveProduct(product);
+			productService.saveProduct(product);
 		} catch (AdminServiceException e) {
 			bindingResult.rejectValue("name", "name.validation.error", "already exist");
 			return "admin/addProduct";
