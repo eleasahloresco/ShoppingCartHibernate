@@ -12,8 +12,10 @@ public interface AdminService {
 
 	public abstract void saveCategory(Category category) throws AdminServiceException;
 
-	public abstract void saveProduct(Product product);
+	public abstract void saveProduct(Product product) throws AdminServiceException;
 
 	public abstract List<Product> getAllProducts();
+
+	public abstract Category getCategory(Long id);
 
 }

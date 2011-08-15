@@ -53,6 +53,54 @@ public class Product extends AbstractModel{
 		this.unitPrice = unitPrice;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((category == null) ? 0 : category.hashCode());
+		result = prime
+				* result
+				+ ((inventoryQuantity == null) ? 0 : inventoryQuantity
+						.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((unitPrice == null) ? 0 : unitPrice.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (category == null) {
+			if (other.category != null)
+				return false;
+		} else if (!category.equals(other.category))
+			return false;
+		if (inventoryQuantity == null) {
+			if (other.inventoryQuantity != null)
+				return false;
+		} else if (!inventoryQuantity.equals(other.inventoryQuantity))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (unitPrice == null) {
+			if (other.unitPrice != null)
+				return false;
+		} else if (!unitPrice.equals(other.unitPrice))
+			return false;
+		return true;
+	}
+
 	
 	
 }

@@ -26,6 +26,12 @@ public class AdminServiceImpl implements AdminService {
 	public void setCategoryDao(CategoryDao categoryDao) {
 		this.categoryDao = categoryDao;
 	}
+	
+	@Autowired
+	public void setProductDao(ProductDao productDao) {
+		this.productDao = productDao;
+	}
+
 
 	@Override
 	public List<Category> getAllCategories() {
@@ -37,8 +43,7 @@ public class AdminServiceImpl implements AdminService {
 		if(category == null){
 			throw new AdminServiceException("Category is Empty");
 		}
-		String sqlQuery = "from Category category where category.name = '" + category.getName() + "'";
-		List<Category> categories = categoryDao.getByCriteria(sqlQuery);
+		List<Category> categories = categoryDao.getAll();
 		
 		if(categories.contains(category)){
 			throw new AdminServiceException("Category already Exist!");
@@ -53,8 +58,22 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public void saveProduct(Product product){
+	public void saveProduct(Product product) throws AdminServiceException{
+		if(product == null){
+			throw new AdminServiceException("Product is Empty");
+		}
+		List<Product> products = productDao.getAll();
+		
+		if(products.contains(product)){
+			throw new AdminServiceException("Product already Exist!");
+		}
+		
 		productDao.save(product);
+	}
+
+	@Override
+	public Category getCategory(Long id) {
+		return categoryDao.get(id);
 	}
 		
 }

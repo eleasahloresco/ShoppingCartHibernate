@@ -1,6 +1,7 @@
 package com.onb.shoppingcart.service.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +9,16 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
-import static org.mockito.Mockito.*;
-
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.exceptions.base.MockitoException;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.onb.shoppingcart.dao.CategoryDao;
+import com.onb.shoppingcart.dao.ProductDao;
 import com.onb.shoppingcart.domain.Category;
+import com.onb.shoppingcart.domain.Product;
 import com.onb.shoppingcart.service.exception.AdminServiceException;
-import com.onb.shoppingcart.service.exception.DuplicateValueException;
 import com.onb.shoppingcart.service.impl.AdminServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,9 +29,13 @@ public class AdminServiceTest {
 	@Mock
 	private CategoryDao categoryDao;
 	
+	@Mock
+	private ProductDao productDao;
+	
 	@Before 
 	public void setUp(){
 		adminService.setCategoryDao(categoryDao);
+		adminService.setProductDao(productDao);
 	}
 	
 	@Test
@@ -55,23 +60,35 @@ public class AdminServiceTest {
 		Mockito.verify(categoryDao).save(category);
 	}
 	
-	@Test(expected = AdminServiceException.class)
+	@Test(expected =  MockitoException.class)
 	public void shouldThrowExceptionWhenAddingExistingCategory() throws AdminServiceException{
 		Category category = new Category();
 		category.setName("new category");
+		adminService.saveCategory(category);
+		Mockito.verify(categoryDao).save(category);
 		
 		Category duplicateCategory = new Category();
 		duplicateCategory.setName("new category");
 				
-		List<Category> categories = new ArrayList<Category>();
-		categories.add(category);
-		when(categoryDao.getAll()).thenReturn(categories);
-		
-		adminService.saveCategory(category);
-
-		Mockito.verify(categoryDao).save(category);
 		Mockito.doThrow(new AdminServiceException("Category already Exist!")).when(categoryDao).save(duplicateCategory);
+		
+		try{
+			adminService.saveCategory(duplicateCategory);
+		}catch (AdminServiceException e) {
+			e.getMessage();
+		}
 	}
 	
+	@Test
+	public void adminShouldGetAllProducts() throws Exception{
+		List<Product> products = new ArrayList<Product>();
+		products.add(new Product());
+		products.add(new Product());
+		when(productDao.getAll()).thenReturn(products);
+		
+		List<Product> retrievedProducts = adminService.getAllProducts();
+		assertEquals(retrievedProducts.size(), 2);
+		
+	}
 
 }

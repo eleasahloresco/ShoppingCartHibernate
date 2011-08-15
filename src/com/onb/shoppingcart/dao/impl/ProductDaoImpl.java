@@ -8,7 +8,7 @@ import com.onb.shoppingcart.domain.Product;
 @Repository("productDao")
 public class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements ProductDao {
 
-	protected ProductDaoImpl() {
+	public ProductDaoImpl() {
 		super(Product.class);
 	}
 	

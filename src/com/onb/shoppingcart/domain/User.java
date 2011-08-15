@@ -6,26 +6,24 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class User extends AbstractModel{
 
-	@ManyToMany
-	@JoinTable(name = "User_Role",
-			joinColumns = { @JoinColumn(name = "user_id")},
-			inverseJoinColumns = { @JoinColumn(name = "role_id")})
-	private List<Role> roles;
+	@OneToOne
+	private Role role;
 	
 	private String username;
 	
 	private String password;
 
-	public List<Role> getRoles() {
-		return roles;
+	public Role getRoles() {
+		return role;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setRoles(Role role) {
+		this.role = role;
 	}
 
 	public String getUsername() {
@@ -44,5 +42,45 @@ public class User extends AbstractModel{
 		this.password = password;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (role == null) {
+			if (other.role != null)
+				return false;
+		} else if (!role.equals(other.role))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+
+	
 	
 }
