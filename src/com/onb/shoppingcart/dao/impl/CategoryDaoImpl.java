@@ -5,8 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.onb.shoppingcart.dao.CategoryDao;
 import com.onb.shoppingcart.domain.Category;
-import com.onb.shoppingcart.domain.Product;
-import com.onb.shoppingcart.domain.User;
 
 @Repository("categoryDao")
 public class CategoryDaoImpl extends GenericDaoImpl<Category, Long> implements CategoryDao {

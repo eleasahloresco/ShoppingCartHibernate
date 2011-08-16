@@ -27,8 +27,9 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 
 import com.onb.shoppingcart.dao.CategoryDao;
 import com.onb.shoppingcart.domain.Category;
+import com.onb.shoppingcart.service.exception.AdminServiceException;
 
-@ContextConfiguration(locations = { "classpath:ApplicationContext.xml" })
+@ContextConfiguration(locations = { "classpath:ApplicationContext-test.xml" })
 public class CategoryDaoTest extends
 		AbstractTransactionalJUnit4SpringContextTests {
 

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.onb.shoppingcart.dao.CategoryDao;
 import com.onb.shoppingcart.domain.Category;
-import com.onb.shoppingcart.domain.Product;
 import com.onb.shoppingcart.service.CategoryService;
 import com.onb.shoppingcart.service.exception.AdminServiceException;
 
