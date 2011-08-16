@@ -21,8 +21,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByUsername(String username) {
-		String sqlQuery = "from User user where user.username = '" + username + "'";
-		return userDao.getByCriteria(sqlQuery).get(0);
+		return userDao.getUserByUsername(username);
 	}
 	
 	

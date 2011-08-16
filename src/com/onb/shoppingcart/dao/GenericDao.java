@@ -4,16 +4,16 @@ import java.util.List;
 
 public interface GenericDao<T, ID> {
 
-	public void save(T item);
+	void save(T item);
 	
-	public void update(T item);
+	void update(T item);
 	
-	public void delete(T item);
+	void delete(T item);
 	
-	public T get(ID id);
+	T get(ID id);
 	
-	public List<T> getAll();
+	List<T> getAll();
 
-	public abstract List<T> getByCriteria(String sqlQuery);
+	List<T> getByCriteria(String sqlQuery);
 	
 }
