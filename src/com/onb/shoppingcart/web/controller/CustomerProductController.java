@@ -42,7 +42,7 @@ public class CustomerProductController {
 			@RequestParam("productNumber") Long productNumber,
 			HttpServletRequest request){
 
-		Product product = productService.getProduct(productNumber);
+		Product product = productService.get(productNumber);
 		request.setAttribute("product", product);
 		
 
@@ -53,11 +53,11 @@ public class CustomerProductController {
 	public String Quantity(@ModelAttribute("orderDetailModel") OrderDetail orderDetail, BindingResult bindingResult,
 			HttpServletRequest request, @RequestParam("product.name") String productName, 
 			Principal principal){
-		Product product = productService.getProductByName(productName);
+		Product product = productService.getByName(productName);
 		request.setAttribute("product", product);
 		
 		Long categoryNumber = product.getCategory().getId();
-		List<Product> products = productService.getProductByCategory(categoryNumber);
+		List<Product> products = productService.getByCategory(categoryNumber);
 		request.setAttribute("products", products);
 		
 		if (orderDetail.getQuantity() == null){

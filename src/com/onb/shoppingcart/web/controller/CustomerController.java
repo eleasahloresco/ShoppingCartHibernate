@@ -77,7 +77,7 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/remove")
 	public String removeOrderDetail(HttpServletRequest request,
 			@RequestParam("orderDetail.product.name") String productName){
-		Product product = productService.getProductByName(productName);
+		Product product = productService.getByName(productName);
 
 		HttpSession session = request.getSession();
 		Order order = (Order)session.getAttribute("order");

@@ -23,13 +23,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<Product> getAllProducts(){
+	public List<Product> getAll(){
 		return productDao.getAll();
 	}
 	
 	@Override
 	@Transactional(readOnly = false)
-	public void saveProduct(Product product) throws AdminServiceException{
+	public void save(Product product) throws AdminServiceException{
 		if(product == null){
 			throw new AdminServiceException("Product is Empty");
 		}
@@ -43,28 +43,23 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getProductByCategory(Long categoryNumber) {
-		//queries should be in dao
-		String sqlQuery = "from Product product where product.category.id = '" + categoryNumber + "'";
-		return productDao.getByCriteria(sqlQuery);
+	public List<Product> getByCategory(Long categoryId) {
+		return productDao.getByCategory(categoryId);
 	}
 
 	@Override
-	public Product getProduct(Long id) {
+	public Product get(Long id) {
 		return productDao.get(id);
 	}
 
 	@Override
-	public Product getProductByName(String name) {
-		String sqlQuery = "from Product product where product.name = '" + name + "'";
-		return productDao.getByCriteria(sqlQuery).get(0);
+	public Product getByName(String name) {
+		return productDao.getByName(name);
 	}
 	
 	@Override
-	public List<Product> getAllProductsWithQuantityGreaterThanZero(Long categoryNumber) {
-		String sqlQuery = "from Product product where product.category.id = '" + categoryNumber + "' " +
-				"and product.inventoryQuantity > 0";
-		return productDao.getByCriteria(sqlQuery);
+	public List<Product> getAllProductsWithQuantityGreaterThanZero(Long id) {
+		return productDao.getAllProductsWithQuantityGreaterThanZero(id);
 	}
 	
 		

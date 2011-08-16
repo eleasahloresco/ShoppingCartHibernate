@@ -35,7 +35,7 @@ public class AdminProductController {
 
 	@RequestMapping(value = "/admin/addProduct", method = RequestMethod.GET)
 	public String showAddProductForm(@ModelAttribute("productModel") Product product, HttpServletRequest request){
-		List<Product> products = productService.getAllProducts();
+		List<Product> products = productService.getAll();
 		request.setAttribute("products", products);
 		
 		List<Category> categories = categoryService.getAllCategories();
@@ -48,7 +48,7 @@ public class AdminProductController {
 	public String addProduct(@ModelAttribute("productModel") Product product, BindingResult bindingResult,
 			HttpServletRequest request){
 		
-		List<Product> products = productService.getAllProducts();
+		List<Product> products = productService.getAll();
 		request.setAttribute("products", products);
 		
 		List<Category> categories = categoryService.getAllCategories();
@@ -83,7 +83,7 @@ public class AdminProductController {
 		product.setCategory(category);
 		
 		try {
-			productService.saveProduct(product);
+			productService.save(product);
 		} catch (AdminServiceException e) {
 			bindingResult.rejectValue("name", "name.validation.error", "already exist");
 			return "admin/addProduct";

@@ -7,16 +7,16 @@ import com.onb.shoppingcart.service.exception.AdminServiceException;
 
 public interface ProductService {
 
-	public abstract List<Product> getAllProducts();
+	List<Product> getAll();
 
-	void saveProduct(Product product) throws AdminServiceException;
+	void save(Product product) throws AdminServiceException;
 
-	public abstract List<Product> getProductByCategory(Long categoryNumber);
+	List<Product> getByCategory(Long categoryId);
 
-	public abstract Product getProduct(Long id);
+	Product get(Long id);
 
-	public abstract Product getProductByName(String name);
+	Product getByName(String name);
 
-	public abstract List<Product> getAllProductsWithQuantityGreaterThanZero(Long categoryNumber);
+	List<Product> getAllProductsWithQuantityGreaterThanZero(Long id);
 
 }

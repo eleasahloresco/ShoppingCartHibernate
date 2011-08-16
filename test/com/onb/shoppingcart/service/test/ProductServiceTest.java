@@ -36,7 +36,7 @@ public class ProductServiceTest {
 		products.add(new Product());
 		when(productDao.getAll()).thenReturn(products);
 		
-		List<Product> retrievedProducts = productService.getAllProducts();
+		List<Product> retrievedProducts = productService.getAll();
 		assertEquals(retrievedProducts.size(), 2);
 		
 	}
